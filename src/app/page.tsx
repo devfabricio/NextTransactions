@@ -19,10 +19,13 @@ export default function Home() {
   }, [])
 
   const sortTransactionByAmount = () => {
+    const sortedTransactions = [...transactions].sort((a, b) => a.amount - b.amount)
+    setTransactions(sortedTransactions)
   }
 
   const sortTransactionByDate = () => {
-
+    const sortedTransactions = [...transactions].sort((a, b) => a.date.getTime() - b.date.getTime())
+    setTransactions(sortedTransactions)
   }
 
   const formatAmountToUSD = (amount: number) => {
@@ -37,8 +40,20 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.list}>
+      <div className={styles.header}>
         <h1>Transaction List</h1>
+        <div>
+          <span>Sort by:</span>
+          <button className={styles.filterButton} onClick={sortTransactionByAmount}>Amount</button>
+          <button className={styles.filterButton} onClick={sortTransactionByDate}>Date</button>
+        </div>
+        <div className={styles.headerItem}>
+          <span>Valor</span>
+          <span>Data</span>
+          <span>Descrição</span>
+        </div>
+      </div>
+      <div className={styles.list}>
         {transactions.map(item => <div className={styles.item} key={item.id}>
           <div>{formatAmountToUSD(item.amount)}</div>
           <div>{formatDate(item.date)}</div>
