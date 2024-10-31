@@ -8,6 +8,7 @@
 
 .prevButton,
 .nextButton {
+  cursor: pointer;
   background-color: transparent;
   color: #fff;
   border: 2px solid #fff;
