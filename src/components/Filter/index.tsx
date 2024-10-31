@@ -1,5 +1,5 @@
 'use client';
-import styles from '@/components/Filter/Filter.module.css';
+import styles from '@/components/Filter/filter.module.css';
 import { useTransaction } from '@/context/useTransaction.context';
 import { useEffect, useState } from 'react';
 import { SortIcon } from '@/components/Filter/icons/SortIcon';

@@ -1,6 +1,6 @@
 'use client';
 import { useMemo } from 'react';
-import styles from '@/components/TransactionList/TransactionList.module.css';
+import styles from '@/components/TransactionList/transactionList.module.css';
 import { TransactionItem } from '@/components/TransactionItem';
 import { useTransaction } from '@/context/useTransaction.context';
 import { Pagination } from '@/components/Pagination';

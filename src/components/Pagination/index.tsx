@@ -1,5 +1,5 @@
 'use client';
-import styles from '@/components/Pagination/Pagination.module.css';
+import styles from '@/components/Pagination/pagination.module.css';
 import { PaginationProps } from '@/components/Pagination/types';
 import { useRouter } from 'next/navigation';
 
