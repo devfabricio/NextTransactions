@@ -5,6 +5,7 @@ import { TransactionService } from '@/services/transactions.service';
 import { Filter } from '@/components/Filter';
 import { TransactionList } from '@/components/TransactionList';
 import { TransactionProvider } from '@/context/useTransaction.context';
+import { Suspense } from 'react';
 
 export default async function Home() {
   const response = await TransactionService.listTransactions();
@@ -12,14 +13,16 @@ export default async function Home() {
   const totalPages = response.totalPages || 0;
 
   return (
-    <TransactionProvider initialTransactions={transactions}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h1>Transactions</h1>
-          <Filter />
+    <Suspense>
+      <TransactionProvider initialTransactions={transactions}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <h1>Transactions</h1>
+            <Filter />
+          </div>
+          <TransactionList totalPages={totalPages} />
         </div>
-        <TransactionList totalPages={totalPages} />
-      </div>
-    </TransactionProvider>
+      </TransactionProvider>
+    </Suspense>
   );
 }
