@@ -1,9 +1,8 @@
 import styles from '@/app/page.module.css';
-import { useState } from 'react';
-import { TTransaction } from '@/types/transaction';
+import { useTransaction } from '@/context/useTransaction.context';
 
 export const Filter = () => {
-  const [transactions, setTransactions] = useState<TTransaction[]>([]);
+  const { transactions, setTransactions } = useTransaction();
 
   const sortTransactionByAmount = () => {
     const sortedTransactions = [...transactions].sort(

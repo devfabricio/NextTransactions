@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useState } from 'react';
+'use client';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { TTransaction } from '@/types/transaction';
 
 type TransactionContextType = {
@@ -10,8 +11,15 @@ const TransactionContext = createContext<TransactionContextType | undefined>(
   undefined
 );
 
-export const TransactionProvider = ({ children }: { children: ReactNode }) => {
-  const [transactions, setTransactions] = useState<TTransaction[]>([]);
+export const TransactionProvider = ({
+  children,
+  initialTransactions
+}: {
+  children: ReactNode;
+  initialTransactions: TTransaction[];
+}) => {
+  const [transactions, setTransactions] =
+    useState<TTransaction[]>(initialTransactions);
 
   return (
     <TransactionContext.Provider value={{ transactions, setTransactions }}>
@@ -21,7 +29,7 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useTransaction = () => {
-  const context = TransactionContext;
+  const context = useContext(TransactionContext);
   if (!context) {
     throw new Error(
       'useTransactionContext must be used within a TransactionProvider'

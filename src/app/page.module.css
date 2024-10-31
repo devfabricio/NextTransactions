@@ -11,22 +11,16 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 680px;
   width: 100%;
   margin: 2rem auto 0;
-}
-
-.headerItem {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
 }
 
 .list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 680px;
   width: 100%;
   margin: 2rem auto 0;
 }
@@ -35,13 +29,58 @@
   display: flex;
   flex-direction: row;
   gap: 2rem;
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.02);
+}
+
+.item .amount {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.item .description {
+  font-size: 1rem;
+  color: #fff;
+  min-width: 400px;
+}
+
+.item .date {
+  font-size: 1rem;
+  color: #fff;
+  min-width: 100px;
+}
+
+.filters {
+  margin: 2rem 1rem 2rem 0;
+}
+
+.filters span {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 1rem;
 }
 
 .filterButton {
-  background-color: #f0f0f0;
-  color: #333;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
   cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.date, .description, .amount {
+  color: #e0e0e0;
+  font-size: 16px;
 }
