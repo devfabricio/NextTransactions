@@ -18,6 +18,8 @@ type TransactionContextType = {
   setQuery: (query: string) => void;
   currentPage: number;
   filterByPage: (page: number) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 };
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -37,8 +39,10 @@ export const TransactionProvider = ({
   const [transactions, setTransactions] = useState<TTransaction[]>([]);
   const [searchResults, setSearchResults] = useState<TTransaction[]>([]);
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('currentPage', currentPage);
     const currentPageNumber = currentPage ? Number(currentPage) : 1;
     filterByPage(currentPageNumber);
   }, [currentPage]);
@@ -48,6 +52,7 @@ export const TransactionProvider = ({
     const end = page * 10;
     const paginatedTransactions = initialTransactions.slice(start, end);
     setTransactions(paginatedTransactions);
+    setLoading(false);
   };
 
   return (
@@ -60,7 +65,9 @@ export const TransactionProvider = ({
         query,
         setQuery,
         filterByPage,
-        currentPage: currentPage ? Number(currentPage) : 1
+        currentPage: currentPage ? Number(currentPage) : 1,
+        loading,
+        setLoading
       }}
     >
       {children}

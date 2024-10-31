@@ -2,12 +2,15 @@
 import styles from '@/components/Pagination/pagination.module.css';
 import { PaginationProps } from '@/components/Pagination/types';
 import { useRouter } from 'next/navigation';
+import { useTransaction } from '@/context/useTransaction.context';
 
 export const Pagination = (props: PaginationProps) => {
-  const router = useRouter();
   const { totalPages, currentPage } = props;
+  const { setLoading } = useTransaction();
+  const router = useRouter();
 
   const onPageChange = (page: number) => {
+    setLoading(true);
     router.push(`/?page=${page}`);
   };
 
