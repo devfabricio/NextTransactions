@@ -1,6 +1,13 @@
 'use client';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { TTransaction } from '@/types/transaction';
+import { useSearchParams } from 'next/navigation';
 
 type TransactionContextType = {
   transactions: TTransaction[];
@@ -9,6 +16,8 @@ type TransactionContextType = {
   setSearchResults: (transactions: TTransaction[]) => void;
   query: string;
   setQuery: (query: string) => void;
+  currentPage: number;
+  filterByPage: (page: number) => void;
 };
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -22,10 +31,24 @@ export const TransactionProvider = ({
   children: ReactNode;
   initialTransactions: TTransaction[];
 }) => {
-  const [transactions, setTransactions] =
-    useState<TTransaction[]>(initialTransactions);
+  const searchParams = useSearchParams();
+  const currentPage = searchParams.get('page');
+
+  const [transactions, setTransactions] = useState<TTransaction[]>([]);
   const [searchResults, setSearchResults] = useState<TTransaction[]>([]);
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const currentPageNumber = currentPage ? Number(currentPage) : 1;
+    filterByPage(currentPageNumber);
+  }, [currentPage]);
+
+  const filterByPage = (page: number) => {
+    const start = (page - 1) * 10;
+    const end = page * 10;
+    const paginatedTransactions = initialTransactions.slice(start, end);
+    setTransactions(paginatedTransactions);
+  };
 
   return (
     <TransactionContext.Provider
@@ -35,7 +58,9 @@ export const TransactionProvider = ({
         searchResults,
         setSearchResults,
         query,
-        setQuery
+        setQuery,
+        filterByPage,
+        currentPage: currentPage ? Number(currentPage) : 1
       }}
     >
       {children}

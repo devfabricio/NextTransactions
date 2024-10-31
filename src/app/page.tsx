@@ -9,15 +9,16 @@ import { TransactionProvider } from '@/context/useTransaction.context';
 export default async function Home() {
   const response = await TransactionService.listTransactions();
   const transactions: TTransaction[] = response.data || [];
+  const totalPages = response.totalPages || 0;
 
   return (
     <TransactionProvider initialTransactions={transactions}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1>Transaction List</h1>
+          <h1>Transactions</h1>
           <Filter />
         </div>
-        <TransactionList />
+        <TransactionList totalPages={totalPages} />
       </div>
     </TransactionProvider>
   );

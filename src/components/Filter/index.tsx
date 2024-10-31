@@ -1,6 +1,7 @@
+'use client';
 import styles from '@/components/Filter/Filter.module.css';
 import { useTransaction } from '@/context/useTransaction.context';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const Filter = () => {
   const { transactions, setTransactions, setSearchResults, query, setQuery } =
