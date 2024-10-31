@@ -30,3 +30,14 @@
   color: #fff;
   min-width: 100px;
 }
+
+@media screen and (max-width: 768px) {
+    .item {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .item .amount {
+      font-size: 22px;
+    }
+}
