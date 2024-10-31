@@ -2,12 +2,18 @@
 import styles from '@/components/Filter/Filter.module.css';
 import { useTransaction } from '@/context/useTransaction.context';
 import { useEffect, useState } from 'react';
+import { SortIcon } from '@/components/Filter/icons/SortIcon';
 
 export const Filter = () => {
   const { transactions, setTransactions, setSearchResults, query, setQuery } =
     useTransaction();
-  const [amountOrder, setAmountOrder] = useState('asc');
-  const [dateOrder, setDateOrder] = useState('asc');
+  const [amountOrder, setAmountOrder] = useState<'asc' | 'desc'>('asc');
+  const [dateOrder, setDateOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortBy, setSortBy] = useState<'amount' | 'date'>();
+
+  useEffect(() => {
+    sortTransactionByDate();
+  }, []);
 
   useEffect(() => {
     filterByQuery(query);
@@ -39,6 +45,7 @@ export const Filter = () => {
         return b.amount - a.amount;
       }
     });
+    setSortBy('amount');
     setAmountOrder(amountOrder === 'asc' ? 'desc' : 'asc');
     setTransactions(sortedTransactions);
   };
@@ -51,6 +58,7 @@ export const Filter = () => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
     });
+    setSortBy('date');
     setDateOrder(dateOrder === 'asc' ? 'desc' : 'asc');
     setTransactions(sortedTransactions);
   };
@@ -58,11 +66,12 @@ export const Filter = () => {
   return (
     <div className={styles.filters}>
       <span>Sort by:</span>
-      <button className={styles.filterButton} onClick={sortTransactionByAmount}>
-        Amount
+      <button className={styles.sortButton} onClick={sortTransactionByAmount}>
+        {sortBy === 'amount' && <SortIcon order={amountOrder} />}{' '}
+        <span>Amount</span>
       </button>
-      <button className={styles.filterButton} onClick={sortTransactionByDate}>
-        Date
+      <button className={styles.sortButton} onClick={sortTransactionByDate}>
+        {sortBy === 'date' && <SortIcon order={dateOrder} />} <span>Date</span>
       </button>
       <div className={styles.search}>
         <input placeholder="Search" onChange={search} />
