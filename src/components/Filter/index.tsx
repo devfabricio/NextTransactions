@@ -66,16 +66,16 @@ export const Filter = () => {
   return (
     <div className={styles.filters}>
       <div className={styles.search}>
-        <input placeholder="Search" onChange={search}/>
+        <input placeholder="Search" onChange={search} />
       </div>
       <div className={styles.sortContainer}>
         <span>Sort by:</span>
         <button className={styles.sortButton} onClick={sortTransactionByAmount}>
-          {sortBy === 'amount' && <SortIcon order={amountOrder}/>}{' '}
+          {sortBy === 'amount' && <SortIcon order={amountOrder} />}{' '}
           <span>Amount</span>
         </button>
         <button className={styles.sortButton} onClick={sortTransactionByDate}>
-          {sortBy === 'date' && <SortIcon order={dateOrder}/>}{' '}
+          {sortBy === 'date' && <SortIcon order={dateOrder} />}{' '}
           <span>Date</span>
         </button>
       </div>
