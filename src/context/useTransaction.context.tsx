@@ -11,13 +11,14 @@ import { useSearchParams } from 'next/navigation';
 
 type TransactionContextType = {
   transactions: TTransaction[];
+  paginatedTransactions: TTransaction[];
   setTransactions: (transactions: TTransaction[]) => void;
   searchResults: TTransaction[];
   setSearchResults: (transactions: TTransaction[]) => void;
   query: string;
   setQuery: (query: string) => void;
   currentPage: number;
-  filterByPage: (page: number) => void;
+  filterByPage: (transactions: TTransaction[], page: number) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 };
@@ -36,22 +37,25 @@ export const TransactionProvider = ({
   const searchParams = useSearchParams();
   const currentPage = searchParams.get('page');
 
-  const [transactions, setTransactions] = useState<TTransaction[]>([]);
+  const [transactions, setTransactions] =
+    useState<TTransaction[]>(initialTransactions);
+  const [paginatedTransactions, setPaginatedTransactions] = useState<
+    TTransaction[]
+  >([]);
   const [searchResults, setSearchResults] = useState<TTransaction[]>([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('currentPage', currentPage);
     const currentPageNumber = currentPage ? Number(currentPage) : 1;
-    filterByPage(currentPageNumber);
-  }, [currentPage]);
+    filterByPage(transactions, currentPageNumber);
+  }, []);
 
-  const filterByPage = (page: number) => {
+  const filterByPage = (transactions: TTransaction[], page: number) => {
     const start = (page - 1) * 10;
     const end = page * 10;
-    const paginatedTransactions = initialTransactions.slice(start, end);
-    setTransactions(paginatedTransactions);
+    const paginatedTransactions = transactions.slice(start, end);
+    setPaginatedTransactions(paginatedTransactions);
     setLoading(false);
   };
 
@@ -59,6 +63,7 @@ export const TransactionProvider = ({
     <TransactionContext.Provider
       value={{
         transactions,
+        paginatedTransactions,
         setTransactions,
         searchResults,
         setSearchResults,

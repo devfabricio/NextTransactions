@@ -6,12 +6,13 @@ import { useTransaction } from '@/context/useTransaction.context';
 
 export const Pagination = (props: PaginationProps) => {
   const { totalPages, currentPage } = props;
-  const { setLoading } = useTransaction();
+  const { transactions, setLoading, filterByPage } = useTransaction();
   const router = useRouter();
 
   const onPageChange = (page: number) => {
     setLoading(true);
     router.push(`/?page=${page}`);
+    filterByPage(transactions, page);
   };
 
   return (

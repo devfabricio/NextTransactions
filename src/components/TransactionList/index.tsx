@@ -7,13 +7,15 @@ import { Pagination } from '@/components/Pagination';
 import { TransactionListProps } from '@/components/TransactionList/types';
 
 export const TransactionList = (props: TransactionListProps) => {
-  const { transactions, searchResults, loading, query, currentPage } =
+  const { paginatedTransactions, searchResults, loading, query, currentPage } =
     useTransaction();
   const { totalPages } = props;
 
   const transactionList = useMemo(() => {
-    return searchResults.length || query ? searchResults : transactions;
-  }, [searchResults, transactions, query]);
+    return searchResults.length || query
+      ? searchResults
+      : paginatedTransactions;
+  }, [searchResults, paginatedTransactions, query]);
 
   return (
     <>
