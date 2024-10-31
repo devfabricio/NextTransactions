@@ -1,11 +1,13 @@
 'use client';
 import styles from '@/components/Filter/Filter.module.css';
 import { useTransaction } from '@/context/useTransaction.context';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Filter = () => {
   const { transactions, setTransactions, setSearchResults, query, setQuery } =
     useTransaction();
+  const [amountOrder, setAmountOrder] = useState('asc');
+  const [dateOrder, setDateOrder] = useState('asc');
 
   useEffect(() => {
     filterByQuery(query);
@@ -30,16 +32,26 @@ export const Filter = () => {
   };
 
   const sortTransactionByAmount = () => {
-    const sortedTransactions = [...transactions].sort(
-      (a, b) => a.amount - b.amount
-    );
+    const sortedTransactions = [...transactions].sort((a, b) => {
+      if (amountOrder === 'asc') {
+        return a.amount - b.amount;
+      } else {
+        return b.amount - a.amount;
+      }
+    });
+    setAmountOrder(amountOrder === 'asc' ? 'desc' : 'asc');
     setTransactions(sortedTransactions);
   };
 
   const sortTransactionByDate = () => {
-    const sortedTransactions = [...transactions].sort(
-      (a, b) => a.date.getTime() - b.date.getTime()
-    );
+    const sortedTransactions = [...transactions].sort((a, b) => {
+      if (dateOrder === 'asc') {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+    });
+    setDateOrder(dateOrder === 'asc' ? 'desc' : 'asc');
     setTransactions(sortedTransactions);
   };
 
