@@ -1,0 +1,32 @@
+.item {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.02);
+}
+
+.item .amount {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.item .description {
+  font-size: 1rem;
+  color: #fff;
+  min-width: 400px;
+}
+
+.item .date {
+  font-size: 1rem;
+  color: #fff;
+  min-width: 100px;
+}
