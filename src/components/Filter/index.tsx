@@ -1,8 +1,28 @@
-import styles from '@/app/page.module.css';
+import styles from '@/components/Filter/Filter.module.css';
 import { useTransaction } from '@/context/useTransaction.context';
+import { useEffect, useState } from 'react';
 
 export const Filter = () => {
-  const { transactions, setTransactions } = useTransaction();
+  const { transactions, setTransactions, setSearchResults } = useTransaction();
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    filterByQuery(query);
+  }, [query]);
+
+  const search = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setQuery(searchValue);
+  };
+
+  const filterByQuery = (query: string) => {
+    const filteredTransactions = transactions.filter((transaction) => {
+      return transaction.description
+        .toLowerCase()
+        .includes(query.toLowerCase());
+    });
+    setSearchResults(filteredTransactions);
+  };
 
   const sortTransactionByAmount = () => {
     const sortedTransactions = [...transactions].sort(
@@ -27,7 +47,9 @@ export const Filter = () => {
       <button className={styles.filterButton} onClick={sortTransactionByDate}>
         Date
       </button>
-      <input className={styles.search} placeholder="Search" />
+      <div className={styles.search}>
+        <input placeholder="Search" onChange={search} />
+      </div>
     </div>
   );
 };

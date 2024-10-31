@@ -5,6 +5,8 @@ import { TTransaction } from '@/types/transaction';
 type TransactionContextType = {
   transactions: TTransaction[];
   setTransactions: (transactions: TTransaction[]) => void;
+  searchResults: TTransaction[];
+  setSearchResults: (transactions: TTransaction[]) => void;
 };
 
 const TransactionContext = createContext<TransactionContextType | undefined>(
@@ -20,9 +22,12 @@ export const TransactionProvider = ({
 }) => {
   const [transactions, setTransactions] =
     useState<TTransaction[]>(initialTransactions);
+  const [searchResults, setSearchResults] = useState<TTransaction[]>([]);
 
   return (
-    <TransactionContext.Provider value={{ transactions, setTransactions }}>
+    <TransactionContext.Provider
+      value={{ transactions, setTransactions, searchResults, setSearchResults }}
+    >
       {children}
     </TransactionContext.Provider>
   );
