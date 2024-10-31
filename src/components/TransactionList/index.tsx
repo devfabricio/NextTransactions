@@ -17,7 +17,7 @@ export const TransactionList = (props: TransactionListProps) => {
 
   return (
     <>
-      {!loading ? (
+      {loading ? (
         <div className={styles.spinner} />
       ) : (
         <div className={styles.list}>
