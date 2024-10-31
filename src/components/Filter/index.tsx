@@ -3,8 +3,8 @@ import { useTransaction } from '@/context/useTransaction.context';
 import { useEffect, useState } from 'react';
 
 export const Filter = () => {
-  const { transactions, setTransactions, setSearchResults } = useTransaction();
-  const [query, setQuery] = useState('');
+  const { transactions, setTransactions, setSearchResults, query, setQuery } =
+    useTransaction();
 
   useEffect(() => {
     filterByQuery(query);
@@ -16,6 +16,10 @@ export const Filter = () => {
   };
 
   const filterByQuery = (query: string) => {
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
     const filteredTransactions = transactions.filter((transaction) => {
       return transaction.description
         .toLowerCase()

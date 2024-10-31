@@ -4,11 +4,11 @@ import { TransactionItem } from '@/components/TransactionItem';
 import { useTransaction } from '@/context/useTransaction.context';
 
 export const TransactionList = () => {
-  const { transactions, searchResults } = useTransaction();
+  const { transactions, searchResults, query } = useTransaction();
 
   const transactionList = useMemo(() => {
-    return searchResults.length ? searchResults : transactions;
-  }, [searchResults, transactions]);
+    return searchResults.length || query ? searchResults : transactions;
+  }, [searchResults, transactions, query]);
 
   return (
     <div className={styles.list}>
